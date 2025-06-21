@@ -4,4 +4,5 @@
 - classnames 
 - zod
 - usePathname
-- React SimpleMDE (EasyMDE) 
+- React SimpleMDE (EasyMDE) (Markdown editor)
+- react-hook-form

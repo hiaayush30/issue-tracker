@@ -5,6 +5,7 @@ import NavBar from "./NavBar";
 import { Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 import './theme-config.css';
+import { ToastContainer } from "react-toastify"
 
 
 const geistSans = Geist({
@@ -35,6 +36,7 @@ export default function RootLayout({
         <Theme accentColor="iris">
           <NavBar />
           {children}
+          <ToastContainer />
         </Theme>
       </body>
     </html >
