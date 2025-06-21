@@ -21,7 +21,7 @@ function NavBar() {
     return (
         <nav className='flex gap-4 px-4 h-14 border-b items-center mb-5'>
             <Link
-                className='text-2xl font-semibold flex gap-1 items-center'
+                className='md:text-2xl text-xl font-semibold flex gap-1 items-center'
                 href={"/"}
             >
                 <AiFillBug />
