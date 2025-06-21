@@ -20,9 +20,11 @@ function NewIssue() {
 
     type createIssueType = z.infer<typeof createIssueSchema>;
 
-    const formSubmit = async (data: createIssueType) => {
+    const onSubmit = async (data: createIssueType) => {
         try {
             setIsSubmitting(true);
+            // createIssue(data) not needed here but good for complex apps where you use same call
+            // via multiple components specially sending certain http headers
             await axios.post("/api/issues", data);
             router.push("/issues");
             toast.success("issue created successfully");
@@ -46,7 +48,7 @@ function NewIssue() {
             }
             <form
                 className="space-y-3"
-                onSubmit={handleSubmit(formSubmit)}
+                onSubmit={handleSubmit(onSubmit)}
             >
                 <TextField.Root
                     placeholder="Title"
@@ -65,7 +67,7 @@ function NewIssue() {
                 <ErrorMessage>{errors.description?.message}</ErrorMessage>
 
                 <Button disabled={isSubmitting}>
-                    { isSubmitting ? <Spinner/> : "Submit New Issue"}
+                    {isSubmitting ? <>Submitting <Spinner /></> : "Submit New Issue"}
                 </Button>
             </form>
         </div>
