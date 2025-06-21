@@ -4,3 +4,4 @@
 - classnames 
 - zod
 - usePathname
+- React SimpleMDE (EasyMDE) 
