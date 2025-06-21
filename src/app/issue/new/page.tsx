@@ -1,23 +1,23 @@
 "use client"
 import React, { useState } from "react"
-import { Button, Callout, TextField } from "@radix-ui/themes"
+import { Button, Callout, Text, TextField } from "@radix-ui/themes"
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import { useForm, Controller } from "react-hook-form";
 import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-
-interface IssueForm {
-    title: string;
-    description: string
-}
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createIssueSchema } from "@/lib/validationSchemas";
+import { z } from "zod";
 
 function NewIssue() {
     const router = useRouter();
     const [error, setError] = useState('');
 
-    const formSubmit = async (data: IssueForm) => {
+    type createIssueType = z.infer<typeof createIssueSchema>;
+
+    const formSubmit = async (data: createIssueType) => {
         try {
             await axios.post("/api/issues", data);
             router.push("/issues");
@@ -29,10 +29,12 @@ function NewIssue() {
             }
         }
     }
-    const { register, control, handleSubmit } = useForm<IssueForm>();
+    const { register, control, handleSubmit, formState: { errors } } = useForm<createIssueType>({
+        resolver: zodResolver(createIssueSchema)
+    });
     return (
         <div className="max-w-xl px-5">
-            { 
+            {
                 error && <Callout.Root color="red" className="mb-5">
                     <Callout.Text>{error}</Callout.Text>
                 </Callout.Root>
@@ -45,14 +47,20 @@ function NewIssue() {
                     placeholder="Title"
                     {...register("title")}
                 />
-                 {/* we cant directly destructure the register() in SimpleMDe so using Controllerr component from useForm */}
-                 {/* name of Controller same as the property you want to register */}
+                {/* we cant directly destructure the register() in SimpleMDe so using Controllerr component from useForm */}
+                {/* name of Controller same as the property you want to register */}
+                {
+                    errors.title && <Text as="p" color="red">{errors.title.message}</Text>
+                }
                 <Controller
                     name="description"
                     control={control}
                     //field has the same properties like in the object returned by register()
                     render={({ field }) => <SimpleMDE placeholder="enter description" {...field} />}
                 />
+                {
+                    errors.description && <Text as="p" color="red">{errors.description.message}</Text>
+                }
                 <Button>Submit New Issue</Button>
             </form>
         </div>

@@ -7,5 +7,6 @@
 - react-hook-form
 - axios
 - react-toastify
+- @hookform.resolvers (to integrate react-hook-form with data validation libs including zod)
 
 -- usePathname to get current path
