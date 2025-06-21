@@ -1,5 +1,6 @@
 ## Tech Stack used
 - next.js
 - prisma
-- classnames
+- classnames 
 - zod
+- usePathname
