@@ -1,10 +1,10 @@
 "use client"
-import React from "react"
-import { Button, TextField } from "@radix-ui/themes"
+import React, { useState } from "react"
+import { Button, Callout, TextField } from "@radix-ui/themes"
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import { useForm, Controller } from "react-hook-form";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
@@ -15,35 +15,47 @@ interface IssueForm {
 
 function NewIssue() {
     const router = useRouter();
+    const [error, setError] = useState('');
+
     const formSubmit = async (data: IssueForm) => {
         try {
             await axios.post("/api/issues", data);
             router.push("/issues");
-            toast("issue created successfully");
+            toast.success("issue created successfully");
         } catch (error) {
             console.log(error);
-            toast("failed to create issue");
+            if (error instanceof AxiosError) {
+                setError(error.response?.data?.error)
+            }
         }
     }
     const { register, control, handleSubmit } = useForm<IssueForm>();
     return (
-        <form
-            className="p-5 space-y-3"
-            onSubmit={handleSubmit(formSubmit)}
-        >
-            <TextField.Root
-                placeholder="Title"
-                className="max-w-xl"
-                {...register("title")}
-            />
-            <Controller
-                name="description"
-                control={control}
-                //field has the same properties like in the object returned by register()
-                render={({ field }) => <SimpleMDE placeholder="description" className="max-w-xl" {...field} />}
-            />
-            <Button>Submit New Issue</Button>
-        </form>
+        <div className="max-w-xl px-5">
+            { 
+                error && <Callout.Root color="red" className="mb-5">
+                    <Callout.Text>{error}</Callout.Text>
+                </Callout.Root>
+            }
+            <form
+                className="space-y-3"
+                onSubmit={handleSubmit(formSubmit)}
+            >
+                <TextField.Root
+                    placeholder="Title"
+                    {...register("title")}
+                />
+                 {/* we cant directly destructure the register() in SimpleMDe so using Controllerr component from useForm */}
+                 {/* name of Controller same as the property you want to register */}
+                <Controller
+                    name="description"
+                    control={control}
+                    //field has the same properties like in the object returned by register()
+                    render={({ field }) => <SimpleMDE placeholder="enter description" {...field} />}
+                />
+                <Button>Submit New Issue</Button>
+            </form>
+        </div>
     )
 }
 

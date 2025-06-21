@@ -13,7 +13,8 @@ export const POST = async (req: NextRequest) => {
         const parsed = createIssueSchema.safeParse(body);
         if (!parsed.success) {
             return NextResponse.json({
-                error: parsed.error.errors
+                error: "invalid request | title and description required",
+                errors: parsed.error.format()
             }, { status: 403 })
         }
         const { description, title } = parsed.data;
@@ -21,7 +22,7 @@ export const POST = async (req: NextRequest) => {
         const issue = await prisma.issue.create({
             data: {
                 title,
-                description 
+                description
             }
         })
 
