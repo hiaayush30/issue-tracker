@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from "react"
-import { Button, Callout, Text, TextField } from "@radix-ui/themes"
+import { Button, Callout, TextField } from "@radix-ui/themes"
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import { useForm, Controller } from "react-hook-form";
@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createIssueSchema } from "@/lib/validationSchemas";
 import { z } from "zod";
+import ErrorMessage from "@/components/ErrorMessage";
 
 function NewIssue() {
     const router = useRouter();
@@ -47,20 +48,18 @@ function NewIssue() {
                     placeholder="Title"
                     {...register("title")}
                 />
+                <ErrorMessage>{errors.title?.message}</ErrorMessage>
+
                 {/* we cant directly destructure the register() in SimpleMDe so using Controllerr component from useForm */}
                 {/* name of Controller same as the property you want to register */}
-                {
-                    errors.title && <Text as="p" color="red">{errors.title.message}</Text>
-                }
                 <Controller
                     name="description"
                     control={control}
                     //field has the same properties like in the object returned by register()
                     render={({ field }) => <SimpleMDE placeholder="enter description" {...field} />}
                 />
-                {
-                    errors.description && <Text as="p" color="red">{errors.description.message}</Text>
-                }
+                <ErrorMessage>{errors.description?.message}</ErrorMessage>
+                
                 <Button>Submit New Issue</Button>
             </form>
         </div>
