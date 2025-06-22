@@ -35,7 +35,9 @@ export default function RootLayout({
       >
         <Theme accentColor="iris">
           <NavBar />
-          {children}
+          <main>
+            {children}
+          </main>
           <ToastContainer />
         </Theme>
       </body>

@@ -8,5 +8,6 @@
 - axios
 - react-toastify
 - @hookform.resolvers (to integrate react-hook-form with data validation libs including zod)
+- react-loading-skeleton
 
 -- usePathname to get current path
