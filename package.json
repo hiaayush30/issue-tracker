@@ -25,6 +25,7 @@
     "react-hook-form": "^7.58.1",
     "react-icons": "^5.5.0",
     "react-loading-skeleton": "^3.5.0",
+    "react-markdown": "^10.1.0",
     "react-simplemde-editor": "^5.2.0",
     "react-toastify": "^11.0.5",
     "zod": "^3.25.67"
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
