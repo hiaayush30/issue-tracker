@@ -19,7 +19,7 @@ const links = [
 function NavBar() {
     const currentPath = usePathname();
     return (
-        <nav className='flex gap-4 px-4 h-14 border-b items-center mb-5'>
+        <nav className='flex gap-4 px-4 h-14 border-b items-center'>
             <Link
                 className='md:text-2xl text-xl font-semibold flex gap-1 items-center'
                 href={"/"}

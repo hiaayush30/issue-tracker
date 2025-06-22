@@ -40,7 +40,7 @@ function NewIssue() {
         resolver: zodResolver(createIssueSchema)
     });
     return (
-        <div className="max-w-xl px-5">
+        <div className="max-w-xl px-5 py-4">
             {
                 error && <Callout.Root color="red" className="mb-5">
                     <Callout.Text>{error}</Callout.Text>
