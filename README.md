@@ -12,3 +12,4 @@
 - react-markdown (to preview the markdown) with tailwindcss typography plugin
 
 -- usePathname to get current path
+-- disabling ssr using next/dynamic

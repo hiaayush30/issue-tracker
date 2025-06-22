@@ -1,7 +1,11 @@
 "use client"
 import React, { useState } from "react"
 import { Button, Callout, TextField } from "@radix-ui/themes"
-import SimpleMDE from "react-simplemde-editor";
+import dynamic from "next/dynamic";
+// all components are rendered on server once (even client side ones)
+// so components like SimpleMDE which use browser apis like navigator gives issues
+// so use dynamic imports using next/dynamic to fix this (setting ssr to false)
+// import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import { useForm, Controller } from "react-hook-form";
 import axios, { AxiosError } from "axios";
@@ -12,6 +16,10 @@ import { createIssueSchema } from "@/lib/validationSchemas";
 import { z } from "zod";
 import ErrorMessage from "@/components/ErrorMessage";
 import Spinner from "@/components/Spinner";
+
+const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
+    ssr: false
+})
 
 function NewIssue() {
     const router = useRouter();
