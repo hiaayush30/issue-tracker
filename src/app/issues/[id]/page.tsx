@@ -5,16 +5,14 @@ import EditIssue from "./EditIssue";
 import IssueDetails from "./IssueDetails";
 
 interface Props {
-    params: {
-        id: string
-    }
+    params: Promise<{ id: string }>
 }
 
 async function IssueDetailsPage({ params }: Props) {
     const { id } = await params;
-    
+
     const parsedId = Number(id);
-    if (typeof parsedId !== "number") notFound(); //if users enter /issues/abc or sth
+    if (isNaN(parsedId)) notFound(); //if users enter /issues/abc or sth
     const issue = await prisma.issue.findUnique({
         where: {
             id: parsedId

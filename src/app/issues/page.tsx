@@ -1,7 +1,14 @@
+//to make page dynamic
+export const dynamic = "force-dynamic";
+//or
+// export const revalidate = 0;  //will work same as abv(in seconds)
+
+// search for next.js route segement config
+
 import { prisma } from "@/lib/prisma"
 import { Table } from "@radix-ui/themes"
 import IssueStatusBadge from "@/components/IssueStatusBadge";
-import IssueActions from "./IssueActions";
+import IssueActions from "./IssueActions"; 
 import Link from "@/components/Link";
 
 async function IssuesPage() {

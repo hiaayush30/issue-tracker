@@ -3,7 +3,7 @@ import { updateIssueSchema } from "@/lib/validationSchemas";
 import { NextRequest, NextResponse } from "next/server";
 
 
-export const PATCH = async (req: NextRequest, { params }: { params: { id: string } }) => {
+export const PATCH = async (req: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
     try {
         const body = await req.json();
         const parsedBody = updateIssueSchema.safeParse(body);
@@ -14,10 +14,10 @@ export const PATCH = async (req: NextRequest, { params }: { params: { id: string
             }, { status: 403 })
         }
         const { description, title, status } = parsedBody.data;
-        const { id } = params;
+        const { id } = await params;
         const parsedId = Number(id);
 
-        if (typeof parsedId !== "number") {
+        if (isNaN(parsedId)) {
             return NextResponse.json({
                 error: "Invalid request | valid id required"
             }, { status: 403 })

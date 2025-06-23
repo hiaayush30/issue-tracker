@@ -48,6 +48,7 @@ function IssueForm({ issue }: { issue?: Issue }) {
             }
             await axios.post("/api/issues", data);
             router.push("/issues");
+            router.refresh()
             toast.success("issue created successfully");
         } catch (error) {
             console.log(error);
