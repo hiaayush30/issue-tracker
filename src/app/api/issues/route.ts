@@ -9,7 +9,7 @@ export const POST = async (req: NextRequest) => {
         if (!parsed.success) {
             return NextResponse.json({
                 error: "invalid request | title and description required",
-                errors: parsed.error.format()
+                zod: parsed.error.format()
             }, { status: 403 })
         }
         const { description, title } = parsed.data;
