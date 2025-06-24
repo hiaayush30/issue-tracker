@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "./NavBar";
-import { Theme } from "@radix-ui/themes";
+import { Container, Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 import './theme-config.css';
 import { ToastContainer } from "react-toastify"
@@ -36,7 +36,9 @@ export default function RootLayout({
         <Theme accentColor="iris">
           <NavBar />
           <main>
-            {children}
+            <Container>
+              {children}
+            </Container>
           </main>
           <ToastContainer />
         </Theme>

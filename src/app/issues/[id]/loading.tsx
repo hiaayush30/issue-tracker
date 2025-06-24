@@ -16,4 +16,9 @@ function LoadingIssueDetailPAge() {
   )
 }
 
+// What prose Does: The @tailwindcss/typography plugin introduces the prose class. 
+// When you apply this class to a container element (like a <div> or <article>),
+// it automatically applies a set of beautiful, well-designed typographic defaults to
+// all the "prose" elements within that container.
+
 export default LoadingIssueDetailPAge
