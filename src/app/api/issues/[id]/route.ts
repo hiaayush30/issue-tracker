@@ -53,3 +53,40 @@ export const PATCH = async (req: NextRequest, { params }: { params: Promise<{ id
         }, { status: 500 })
     }
 }
+
+export const DELETE = async (req: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
+    try {
+        const { id } = await params;
+        const parsedId = Number(id);
+
+        if (isNaN(parsedId)) {
+            return NextResponse.json({
+                error: "Invalid request | valid id required"
+            }, { status: 403 })
+        }
+
+        const existing = await prisma.issue.findUnique({ where: { id: parsedId } });
+        if (!existing) {
+            return NextResponse.json({
+                error: "issue not found!"
+            }, { status: 404 })
+        }
+
+        const issue = await prisma.issue.delete({
+            where: {
+                id: Number(id)
+            }
+        })
+
+        return NextResponse.json({
+            message: "issue deleted successfully",
+            issue
+        })
+
+    } catch (error) {
+        console.log(error);
+        NextResponse.json({
+            error: "Internal server error"
+        }, { status: 500 })
+    }
+}
