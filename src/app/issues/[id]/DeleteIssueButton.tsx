@@ -1,7 +1,7 @@
 "use client"
 import { Spinner } from "@/components";
 import { AlertDialog, Button, Flex } from "@radix-ui/themes"
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react"
 import { AiOutlineDelete } from "react-icons/ai"
@@ -9,15 +9,19 @@ import { toast } from "react-toastify";
 
 function DeleteIssue({ issueId }: { issueId: number }) {
     const router = useRouter();
-    const [submitting, setSubmitting] = useState(false);
+    const [deleting, setDeleting] = useState(false);
     const handleDelete = async () => {
         try {
-            setSubmitting(true);
-            await axios.delete("/issues/" + issueId);
+            setDeleting(true);
+            await axios.delete("/api/issues/" + issueId);
             toast.info("issue deleted");
             router.push("/issues");
+            router.refresh()
         } catch (error) {
             console.log(error);
+            if(error instanceof AxiosError){
+                return toast.error(error.response?.data.error)
+            }
             toast.error("Could not delete issue");
         }
     }
@@ -25,9 +29,9 @@ function DeleteIssue({ issueId }: { issueId: number }) {
         <AlertDialog.Root>
             <AlertDialog.Trigger>
                 <Button
-                    disabled={submitting}
+                    disabled={deleting}
                     color="red">
-                    {submitting ? <>Deleting <Spinner /></> : <><AiOutlineDelete /> Delete Issue</>}
+                    {deleting ? <>Deleting <Spinner /></> : <><AiOutlineDelete /> Delete Issue</>}
                 </Button>
             </AlertDialog.Trigger>
             <AlertDialog.Content>
