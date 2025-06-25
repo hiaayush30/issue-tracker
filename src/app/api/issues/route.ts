@@ -1,9 +1,15 @@
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { createIssueSchema } from "../../../lib/validationSchemas";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 export const POST = async (req: NextRequest) => {
     try {
+        const session = await getServerSession(authOptions);
+        if (!session?.user) {
+            return NextResponse.json({ error: "Unauthorized request" }, { status: 401 })
+        }
         const body = await req.json();
         const parsed = createIssueSchema.safeParse(body);
         if (!parsed.success) {

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import IssueForm from "../../_components/IssueForm";
 
+
 interface Props {
     params: Promise<{ id: string }>
 }

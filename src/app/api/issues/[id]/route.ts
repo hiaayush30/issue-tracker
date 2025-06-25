@@ -1,10 +1,16 @@
 import { prisma } from "@/lib/prisma";
 import { updateIssueSchema } from "@/lib/validationSchemas";
+import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
+import { authOptions } from "../../auth/[...nextauth]/route";
 
 
 export const PATCH = async (req: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
     try {
+        const session = await getServerSession(authOptions);
+        if(!session?.user){
+            return NextResponse.json({error:"Unauthorized request"},{status:401})
+        }
         const body = await req.json();
         const parsedBody = updateIssueSchema.safeParse(body);
         if (!parsedBody.success) {
@@ -56,6 +62,10 @@ export const PATCH = async (req: NextRequest, { params }: { params: Promise<{ id
 
 export const DELETE = async (req: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
     try {
+        const session = await getServerSession(authOptions);
+        if(!session?.user){
+            return NextResponse.json({error:"Unauthorized request"},{status:401})
+        }
         const { id } = await params;
         const parsedId = Number(id);
 
