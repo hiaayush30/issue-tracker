@@ -6,6 +6,7 @@ import { AiFillBug } from 'react-icons/ai'
 import classnames from "classnames";
 import { useSession } from "next-auth/react";
 import { Avatar, Box, Button, Container, DropdownMenu, Flex, Text } from '@radix-ui/themes'
+import { Skeleton } from '@/components'
 
 const links = [
     {
@@ -57,6 +58,10 @@ function NavBar() {
                         </ul>
                     </Flex>
                     <Box>
+                        { 
+                            status=="loading" &&
+                            <Skeleton width={"3rem"}/>
+                        }
                         {status == "unauthenticated" &&
                             (
                                 <Button><Link href={"/api/auth/signin"}>Login</Link></Button>
