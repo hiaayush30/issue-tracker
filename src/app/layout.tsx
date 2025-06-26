@@ -7,6 +7,7 @@ import "@radix-ui/themes/styles.css";
 import './theme-config.css';
 import { ToastContainer } from "react-toastify"
 import AuthProvider from "@/auth/Provider";
+import QueryClientProvider from "@/QueryClientProvider";
 
 
 const geistSans = Geist({
@@ -31,21 +32,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <AuthProvider>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
-        >
-          <Theme accentColor="iris">
-            <NavBar />
-            <main>
-              <Container>
-                {children}
-              </Container>
-            </main>
-            <ToastContainer />
-          </Theme>
-        </body>
-      </AuthProvider>
+      <QueryClientProvider>
+        <AuthProvider>
+          <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
+          >
+            <Theme accentColor="iris">
+              <NavBar />
+              <main>
+                <Container>
+                  {children}
+                </Container>
+              </main>
+              <ToastContainer />
+            </Theme>
+          </body>
+        </AuthProvider>
+      </QueryClientProvider>
     </html >
   );
 }
