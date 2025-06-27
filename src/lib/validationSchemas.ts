@@ -6,8 +6,8 @@ export const createIssueSchema = z.object({
 });
 
 export const updateIssueSchema = z.object({
-    title: z.string().optional(),
-    description: z.string().optional(),
+    title: z.string().min(1,{message:"title cannot be empty"}).optional(),
+    description: z.string().min(1,{message:"description cannot be empty"}).optional(),
     status: z.enum(["OPEN", "IN_PROGRESS", "CLOSED"]).optional(),
-    assignedToUserId:z.string().optional()
+    assignedToUserId:z.string().optional().nullable()
 });

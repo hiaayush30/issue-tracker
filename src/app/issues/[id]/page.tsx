@@ -38,7 +38,7 @@ async function IssueDetailsPage({ params }: Props) {
                 session?.user &&
                 <>
                     <Flex className="lg:col-span-1" direction={"column"} gap={"4"} mx={{ initial: "auto", md: "0" }}>
-                        <AssignIssue/>
+                        <AssignIssue issue={issue} />
                         <EditIssue issueId={issue.id} />
                         <DeleteIssue issueId={issue.id} />
                     </Flex>
