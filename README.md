@@ -10,6 +10,7 @@
 - @hookform.resolvers (to integrate react-hook-form with data validation libs including zod)
 - react-loading-skeleton
 - react-markdown (to preview the markdown) with tailwindcss typography plugin
+- react query
 
 -- usePathname to get current path
 -- disabling ssr using next/dynamic

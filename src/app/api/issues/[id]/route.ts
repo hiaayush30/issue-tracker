@@ -8,8 +8,8 @@ import { authOptions } from "../../auth/[...nextauth]/route";
 export const PATCH = async (req: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
     try {
         const session = await getServerSession(authOptions);
-        if(!session?.user){
-            return NextResponse.json({error:"Unauthorized request"},{status:401})
+        if (!session?.user) {
+            return NextResponse.json({ error: "Unauthorized request" }, { status: 401 })
         }
         const body = await req.json();
         const parsedBody = updateIssueSchema.safeParse(body);
@@ -19,7 +19,7 @@ export const PATCH = async (req: NextRequest, { params }: { params: Promise<{ id
                 zod: parsedBody.error.format()
             }, { status: 403 })
         }
-        const { description, title, status } = parsedBody.data;
+        const { description, title, status, assignedToUserId } = parsedBody.data;
         const { id } = await params;
         const parsedId = Number(id);
 
@@ -43,7 +43,8 @@ export const PATCH = async (req: NextRequest, { params }: { params: Promise<{ id
             data: {
                 title,
                 description,
-                status
+                status,
+                assignedToUserId
             }
         })
 
@@ -63,8 +64,8 @@ export const PATCH = async (req: NextRequest, { params }: { params: Promise<{ id
 export const DELETE = async (req: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
     try {
         const session = await getServerSession(authOptions);
-        if(!session?.user){
-            return NextResponse.json({error:"Unauthorized request"},{status:401})
+        if (!session?.user) {
+            return NextResponse.json({ error: "Unauthorized request" }, { status: 401 })
         }
         const { id } = await params;
         const parsedId = Number(id);
