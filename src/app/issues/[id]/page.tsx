@@ -5,8 +5,8 @@ import EditIssue from "./EditIssueButton";
 import IssueDetails from "./IssueDetails";
 import DeleteIssue from "./DeleteIssueButton";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import AssignIssue from "./AssignIssue";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 
 interface Props {
     params: Promise<{ id: string }>

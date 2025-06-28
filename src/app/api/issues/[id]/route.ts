@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { updateIssueSchema } from "@/lib/validationSchemas";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
-import { authOptions } from "../../auth/[...nextauth]/route";
+import { authOptions } from "../../auth/[...nextauth]/options";
 
 
 export const PATCH = async (req: NextRequest, { params }: { params: Promise<{ id: string }> }) => {

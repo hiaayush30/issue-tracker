@@ -1,7 +1,7 @@
 "use client"
 import { Status } from '@prisma/client'
 import { Select } from '@radix-ui/themes'
-import { useParams, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 const statuses: { label: string, value: Status | "all" }[] = [
