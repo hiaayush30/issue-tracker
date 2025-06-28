@@ -8,12 +8,15 @@ export const dynamic = "force-dynamic";
 import { prisma } from "@/lib/prisma"
 import { Table } from "@radix-ui/themes"
 import IssueStatusBadge from "@/components/IssueStatusBadge";
-import IssueActions from "./IssueActions"; 
+import IssueActions from "./IssueActions";
 import Link from "@/components/Link";
+import { Status } from "@prisma/client";
 
-async function IssuesPage() {
-  const issues = await prisma.issue.findMany();
-
+async function IssuesPage({ searchParams }: { searchParams: Promise<{ status: Status }> }) {
+  const { status } = await searchParams;
+  const allowedStatuses = Object.values(Status);
+  const issues = allowedStatuses.includes(status) ?
+    await prisma.issue.findMany({ where: { status } }) : await prisma.issue.findMany()
   return (
     <div className="p-4">
       <IssueActions />

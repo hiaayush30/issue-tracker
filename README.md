@@ -14,3 +14,9 @@
 
 -- usePathname to get current path
 -- disabling ssr using next/dynamic
+
+```typescript
+ const allowedStatuses = Object.values(Status);
+ // getting searchParams
+  { searchParams }: { searchParams: Promise<{ status: Status }> }
+ ```
