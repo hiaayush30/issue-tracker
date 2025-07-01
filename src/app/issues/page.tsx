@@ -9,23 +9,50 @@ import { prisma } from "@/lib/prisma"
 import { Table } from "@radix-ui/themes"
 import IssueStatusBadge from "@/components/IssueStatusBadge";
 import IssueActions from "./IssueActions";
-import Link from "@/components/Link";
+import Link from "next/link";
 import { Status } from "@prisma/client";
+import { DotFilledIcon } from "@radix-ui/react-icons";
 
-async function IssuesPage({ searchParams }: { searchParams: Promise<{ status: Status }> }) {
-  const { status } = await searchParams;
+type OrderByType = "title" | "status" | "createdAt"
+
+const columns: { label: string, value: OrderByType, className?: string }[] = [
+  { label: "Issue", value: "title" },
+  { label: "Status", value: "status", className: "hidden md:table-cell" },
+  { label: "Created", value: "createdAt", className: "hidden md:table-cell" }
+]
+
+async function IssuesPage({ searchParams }: { searchParams: Promise<{ status: Status, orderBy?: OrderByType }> }) {
+  const { status, orderBy } = await searchParams;
   const allowedStatuses = Object.values(Status);
-  const issues = allowedStatuses.includes(status) ?
-    await prisma.issue.findMany({ where: { status } }) : await prisma.issue.findMany()
+
+  const correctStatus = allowedStatuses.includes(status) ? status : undefined
+  const orderByObject = orderBy && columns.map(col => col.value).includes(orderBy) ?
+    { [orderBy]: "asc" } : undefined
+
+  const issues = await prisma.issue.findMany({ where: { status: correctStatus }, orderBy: orderByObject })
+
   return (
     <div className="p-4">
       <IssueActions />
       <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
-            <Table.ColumnHeaderCell>Issue</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell className="hidden md:table-cell">Status</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell className="hidden md:table-cell">Created</Table.ColumnHeaderCell>
+            {
+              columns.map(async (column) =>
+                <Table.ColumnHeaderCell
+                  key={column.label}
+                  className={column.className}
+                >
+                  <Link href={{
+                    query: { ...(await searchParams), orderBy: column.value }
+                  }}>
+                    <span className="flex gap-1 items-center">
+                      {column.label}
+                      {orderBy == column.value && <DotFilledIcon />}
+                    </span>
+                  </Link>
+                </Table.ColumnHeaderCell>)
+            }
           </Table.Row>
         </Table.Header>
         <Table.Body>
