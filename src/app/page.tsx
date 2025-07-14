@@ -1,8 +1,9 @@
 import Pagination from "@/components/Pagination"
 
-function page() {
+async function page({ searchParams }: { searchParams: Promise<{ page: string }> }) {
+  const { page } = await searchParams;
   return (
-    <Pagination currentPage={1} itemCount={100} pageSize={10} />
+    <Pagination currentPage={Number(page)} itemCount={100} pageSize={10} />
   )
 }
 
