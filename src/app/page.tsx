@@ -1,9 +1,8 @@
+import Pagination from "@/components/Pagination"
 
 function page() {
   return (
-    <div className="p-4">
-      Welcome
-    </div>
+    <Pagination currentPage={1} itemCount={100} pageSize={10} />
   )
 }
 
