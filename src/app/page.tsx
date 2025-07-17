@@ -1,9 +1,12 @@
-import Pagination from "@/components/Pagination"
+import LatestIssues from "./LatestIssues"
 
-async function page({ searchParams }: { searchParams: Promise<{ page: string }> }) {
-  const { page } = await searchParams;
+
+async function page() {
+
   return (
-    <Pagination currentPage={Number(page)} itemCount={100} pageSize={10} />
+    <>
+    <LatestIssues/>
+    </>
   )
 }
 
