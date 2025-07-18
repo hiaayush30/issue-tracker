@@ -1,8 +1,30 @@
-export {default} from "next-auth/middleware";
+// export { default } from "next-auth/middleware";
 
-export const config = {
-    matcher:[
-        '/issues/new',
-        '/issues/:id+/edit'
-    ]
+// export const config = {
+//     matcher: [
+//         '/issues/new',
+//         '/issues/:id+/edit'
+//     ]
+// }
+
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { getToken } from 'next-auth/jwt';
+
+export { default } from 'next-auth/middleware';
+
+export async function middleware(request: NextRequest) {
+    const token = await getToken({ req: request, secret: process.env.NEXT_AUTH_SECRET });
+    const url = request.nextUrl;
+
+    if (!token) {
+        return NextResponse.redirect(new URL('/signin', request.url));
+    }
+
+    return NextResponse.next(); // Continue as normal
 }
+
+// Apply middleware only to these routes
+export const config = {
+    matcher: ['/issues/new', '/issues/:id+/edit'],
+};
