@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma"
 import IssueSummmary from "./IssueSummmary"
 import LatestIssues from "./LatestIssues"
+import IssueChart from "./IssueChart"
 
 
 async function page() {
@@ -12,6 +13,7 @@ async function page() {
     <div className="p-3">
     <LatestIssues/>
     <IssueSummmary closed={closed} inProgress={in_progress} open={open}/>
+    <IssueChart closed={closed} inProgress={in_progress} open={open}/>
     </div>
   )
 }
