@@ -11,6 +11,7 @@
 - react-loading-skeleton
 - react-markdown (to preview the markdown) with tailwindcss typography plugin
 - react query
+- error tracking using sentry
 
 -- usePathname to get current path
 -- disabling ssr using next/dynamic
@@ -20,3 +21,6 @@
  // getting searchParams
   { searchParams }: { searchParams: Promise<{ status: Status }> }
  ```
+
+ - use git-filter-repo to remove a file from repo history
+ ![alt text](image.png)
