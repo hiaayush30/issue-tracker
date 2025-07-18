@@ -13,6 +13,7 @@ import Link from "next/link";
 import { Status } from "@prisma/client";
 import { DotFilledIcon } from "@radix-ui/react-icons";
 import Pagination from "@/components/Pagination";
+import { Metadata } from "next";
 
 type OrderByType = "title" | "status" | "createdAt"
 
@@ -86,3 +87,8 @@ async function IssuesPage({ searchParams }: { searchParams: Promise<{ status: St
 }
 
 export default IssuesPage
+
+export const metadata : Metadata = {
+  title: "Issue Tracker - Issue List",
+  description:"View all project issues"
+}
